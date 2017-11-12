@@ -32,4 +32,4 @@ if __name__ == "__main__":
     codes = get_wencai_stockcode(
         "http://www.iwencai.com/stockpick/search?typed=0&preParams=&ts=1&f=1&qs=index_original&selfsectsn=&querytype=&searchfilter=&tid=stockpick&w=%E9%BE%99%E8%99%8E%E6%A6%9C%E4%B8%8A%E6%A6%9C%E4%B8%AA%E8%82%A1"
     )
-    print str(codes)
+    print(str(codes))

@@ -25,8 +25,8 @@ from pyalgotrade import barfeed, utils
 from pyalgotrade import dataseries
 from pyalgotrade.utils import dt
 
-import bar
-import tickfeed
+from cnx import bar
+from cnx import tickfeed
 
 
 # Interface for csv row parsers.
@@ -133,8 +133,7 @@ class BarFeed(barfeed.BaseBarFeed):
         self.__nextPos.setdefault(instrument, 0)
         # Add and sort the bars
         self.__bars[instrument].extend(bars)
-        barCmp = lambda x, y: cmp(x.getDateTime(), y.getDateTime())
-        self.__bars[instrument].sort(barCmp)
+        self.__bars[instrument].sort(key=lambda x : x.getDateTime())
 
         self.registerInstrument(instrument)
 
@@ -142,7 +141,7 @@ class BarFeed(barfeed.BaseBarFeed):
         ret = True
         # print 'called eof'
         # Check if there is at least one more bar to return.
-        for instrument, bars in self.__bars.iteritems():
+        for instrument, bars in self.__bars.items():
             nextPos = self.__nextPos[instrument]
             if nextPos < len(bars):
                 ret = False
@@ -151,7 +150,7 @@ class BarFeed(barfeed.BaseBarFeed):
 
     def peekDateTime(self):
         ret = None
-        for instrument, bars in self.__bars.iteritems():
+        for instrument, bars in self.__bars.items():
             nextPos = self.__nextPos[instrument]
             if nextPos < len(bars):
                 ret = utils.safe_min(ret, bars[nextPos].getDateTime())
@@ -165,7 +164,7 @@ class BarFeed(barfeed.BaseBarFeed):
 
         # Make a second pass to get all the bars that had the smallest datetime.
         ret = {}
-        for instrument, bars in self.__bars.iteritems():
+        for instrument, bars in self.__bars.items():
             nextPos = self.__nextPos[instrument]
             if nextPos < len(bars) and bars[nextPos].getDateTime() == smallestDateTime:
                 ret[instrument] = bars[nextPos]
@@ -249,8 +248,7 @@ class TickFeed(tickfeed.BaseBarFeed):
         self.__nextPos.setdefault(instrument, 0)
         # Add and sort the bars
         self.__bars[instrument].extend(bars)
-        barCmp = lambda x, y: cmp(x.getDateTime(), y.getDateTime())
-        self.__bars[instrument].sort(barCmp)
+        self.__bars[instrument].sort(key=lambda x : x.getDateTime())
 
         self.registerInstrument(instrument)
 
@@ -258,7 +256,7 @@ class TickFeed(tickfeed.BaseBarFeed):
         ret = True
         # print 'called eof'
         # Check if there is at least one more bar to return.
-        for instrument, bars in self.__bars.iteritems():
+        for instrument, bars in self.__bars.items():
             nextPos = self.__nextPos[instrument]
             if nextPos < len(bars):
                 ret = False
@@ -267,7 +265,7 @@ class TickFeed(tickfeed.BaseBarFeed):
 
     def peekDateTime(self):
         ret = None
-        for instrument, bars in self.__bars.iteritems():
+        for instrument, bars in self.__bars.items():
             nextPos = self.__nextPos[instrument]
             if nextPos < len(bars):
                 ret = utils.safe_min(ret, bars[nextPos].getDateTime())
@@ -281,7 +279,7 @@ class TickFeed(tickfeed.BaseBarFeed):
 
         # Make a second pass to get all the bars that had the smallest datetime.
         ret = {}
-        for instrument, bars in self.__bars.iteritems():
+        for instrument, bars in self.__bars.items():
             nextPos = self.__nextPos[instrument]
             if nextPos < len(bars) and bars[nextPos].getDateTime() == smallestDateTime:
                 ret[instrument] = bars[nextPos]

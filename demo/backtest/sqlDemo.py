@@ -10,7 +10,7 @@ from matplotlib.pyplot import plot
 from pyalgotrade import plotter
 from pyalgotrade.stratanalyzer import returns
 
-import pandasDemo_run as pdr
+from demo.backtest import pandasDemo_run as pdr
 from cnx import pyalg_utils, dataFramefeed
 
 
@@ -21,8 +21,8 @@ def turtle_test(loadtype='pgs', dataString='pyalg'):
     """
     # 从postgres 中加载
     if loadtype == 'pgs':
-        from api.stock.histmd import to_postgres_md as tpd
-        dat = tpd.get_h_data('600848')
+        from api.stock.histmd import to_postgres_md
+        dat = to_postgres_md.get_h_data('600848')
     else:
         from api.stock.histmd.to_mongodb_md import tmd
         w = tmd.KdataDbCache()

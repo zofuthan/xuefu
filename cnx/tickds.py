@@ -90,7 +90,7 @@ class TickDataSeries(dataseries.SequenceDataSeries):
         self.__soldAmountDS.appendWithDateTime(dateTime, bar.getSoldAmount())
         self.__soldVolumeDS.appendWithDateTime(dateTime, bar.getSoldVolume())
         # Process extra columns.
-        for name, value in bar.getExtraColumns().iteritems():
+        for name, value in bar.getExtraColumns().items():
             extraDS = self.__getOrCreateExtraDS(name)
             extraDS.appendWithDateTime(dateTime, value)
 

@@ -21,7 +21,7 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-import Queue
+from queue import Queue, Empty
 import datetime
 import threading
 import time
@@ -33,7 +33,7 @@ from pyalgotrade import resamplebase
 from pyalgotrade.barfeed import membf
 from pyalgotrade.utils import dt
 
-from quant.cnx.lib import dataFramefeed, bar
+from cnx import dataFramefeed, bar
 
 logger = pyalgotrade.logger.getLogger("tushare")
 
@@ -67,7 +67,7 @@ class PollingThread(threading.Thread):
             if not self.__stopped:
                 try:
                     self.doCall()
-                except Exception, e:
+                except Exception as e:
                     logger.critical("Unhandled exception", exc_info=e)
         logger.debug("Thread finished.")
 
@@ -185,7 +185,7 @@ class LiveFeed(dataFramefeed.TickFeed):
         if not isinstance(identifiers, list):
             raise Exception("identifiers must be a list")
 
-        self.__queue = Queue.Queue()
+        self.__queue = Queue()
         self.__thread = GetBarThread(self.__queue, identifiers, datetime.timedelta(seconds=TUSHARE_INQUERY_PERIOD))
         for instrument in identifiers:
             self.registerInstrument(instrument)
@@ -229,7 +229,7 @@ class LiveFeed(dataFramefeed.TickFeed):
                 ret = eventData
             else:
                 logger.error("Invalid event received: %s - %s" % (eventType, eventData))
-        except Queue.Empty:
+        except Empty:
             pass
         return ret
 
@@ -241,5 +241,5 @@ if __name__ == '__main__':
     while not liveFeed.eof():
         bars = liveFeed.getNextBars()
         if bars is not None:
-            print bars['600848'].getHigh(), bars['600848'].getDateTime(),type(bars['600848'].getVolume())
+            print(bars['600848'].getHigh(), bars['600848'].getDateTime(),type(bars['600848'].getVolume()))
             # test/

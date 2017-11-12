@@ -10,7 +10,7 @@ Created on 2017-07-20
 测试bolling线
 """
 import pandas as pd
-import dynamicIndicatorDemo_run as mdd
+from demo.backtest import dynamicIndicatorDemo_run as mdd
 from cnx import pyalg_utils
 from cnx import dataFramefeed
 
@@ -41,7 +41,7 @@ def bolling(code='600281'):
     except:
         from api.stock.lib import gm_api as gm
         dat = gm.gm_api().get_hist_data(code, '2015-01-01', ktype='5')
-        print dat
+        print(dat)
         dat['Adj Close'] = dat['close']
 
     # dat = dat.ix[17000:18000,:]
@@ -61,8 +61,8 @@ def bolling(code='600281'):
     myStrategy.run()
     plt.plot()
 
-    print u'最大回撤：\t%f\t 交易笔数：\t%d\t 盈利笔数：\t%d\n' % (ds.getMaxDrawDown(), ds.getCount(), ds.getProfitableCount())
-    print u'累计收益：\t%f\t 夏普比率：\t%f\t' % (returnsAnalyzer.getCumulativeReturns()[-1], ds.getSharpeRatio())
+    print(u'最大回撤：\t%f\t 交易笔数：\t%d\t 盈利笔数：\t%d\n' % (ds.getMaxDrawDown(), ds.getCount(), ds.getProfitableCount()))
+    print(u'累计收益：\t%f\t 夏普比率：\t%f\t' % (returnsAnalyzer.getCumulativeReturns()[-1], ds.getSharpeRatio()))
 
 
 if __name__ == '__main__':

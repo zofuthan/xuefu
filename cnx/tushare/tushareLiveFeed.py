@@ -23,7 +23,7 @@
 import time
 import datetime
 import threading
-import Queue
+from queue import Queue
 
 from pyalgotrade import bar
 from pyalgotrade import barfeed
@@ -33,7 +33,7 @@ from pyalgotrade import resamplebase
 import pyalgotrade.logger
 from pyalgotrade.utils import dt
 import tushare as ts
-from quant.cnx import dataFramefeed
+from cnx import dataFramefeed
 
 logger = pyalgotrade.logger.getLogger("tushare")
 KTYPE_TO_BASE_FREQUENCY = {'5': bar.Frequency.MINUTE, '15': bar.Frequency.MINUTE, '30': bar.Frequency.MINUTE,
@@ -73,7 +73,7 @@ class PollingThread(threading.Thread):
             if not self.__stopped:
                 try:
                     self.doCall()
-                except Exception, e:
+                except Exception as e:
                     logger.critical("Unhandled exception", exc_info=e)
         logger.debug("Thread finished.")
 
@@ -194,7 +194,7 @@ class LiveFeed(dataFramefeed.Feed):
             self.preload = True
             self.preloadDatas(identifiers, ktype, preload_start)
 
-        self.__queue = Queue.Queue()
+        self.__queue = Queue()
         self.__thread = GetBarThread(self.__queue, identifiers, ktype, KTYPE_TO_CALL_FREQUENCY[ktype],
                                      datetime.timedelta(seconds=apiCallDelay))
         for instrument in identifiers:
@@ -279,5 +279,5 @@ if __name__ == '__main__':
     while not liveFeed.eof():
         bars = liveFeed.getNextBars()
         if bars is not None:
-            print bars['600848'].getHigh(), bars['600848'].getDateTime(),bars['000001'].getHigh()
+            print(bars['600848'].getHigh(), bars['600848'].getDateTime(),bars['000001'].getHigh())
             # test/

@@ -32,7 +32,7 @@ _end_range = pd.date_range(end=_MIDDLE_,periods=7)
 数据库常数
 """
 _PATH_CODE_ = 'd:/data/code.csv';
-_ENGINE_ = 'postgresql://postgres:root@localhost:5432/tushare'
+_ENGINE_ = 'mysql://root:04101132@127.0.0.1/tushare?charset=utf8'
 
 #数据库参数信息及基础语句，pgres——test用
 _DATABASE_ = 'tushare'

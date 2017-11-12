@@ -7,8 +7,8 @@ import pandas as pd
 import datetime
 import json
 import eventlet as et
-from quant import constant as ct
-from quant.utils.wapper_interface import gm_api as gm
+import constant as ct
+from utils.wapper_interface import gm_api as gm
 from pymongo import MongoClient
 from datetime import datetime
 from datetime import timedelta
@@ -80,7 +80,7 @@ class KminDbCache():
                 return  df
 
         return update_one_code(code,collection_name)
-        print 'update is done'
+        print('update is done')
 
     def _read_cache(self, collectionName, code, start, end):
         try:
@@ -103,4 +103,4 @@ class KminDbCache():
 if __name__ == '__main__':
         w = KminDbCache()
         data = w.get_k_data('300426', start='2016-01-05')
-        print data.tail()
+        print(data.tail())

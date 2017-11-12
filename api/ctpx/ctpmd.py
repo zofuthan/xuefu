@@ -6,12 +6,12 @@ import os
 from utils import logger_factory
 logger = logger_factory.getLogger(__name__)
 
-if platform.architecture()[1] == "ELF":
-    from ctp.linux import ctpmd as md
+if platform.system() == "Linux":
+    from cnx.ctp.linux import ctpmd as md
 elif platform.architecture()[0] == "64bit":
-    from ctp.win64 import ctpmd as md
+    from cnx.ctp.win64 import ctpmd as md
 else:
-    from ctp.win32 import ctpmd as md
+    from cnx.ctp.win32 import ctpmd as md
 
 path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mdconn/')
 if not os.path.exists(path):

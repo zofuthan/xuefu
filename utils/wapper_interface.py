@@ -5,7 +5,7 @@ import tushare as ts
 import pandas as pd
 from datetime import datetime,timedelta
 from gmsdk import md,to_dict
-from quant import constant as ct
+import constant as ct
 """
 添加了异常处理
 """
@@ -18,7 +18,7 @@ class tushare:
                    # if not data.empty and data.index.name is not None:   #有时候存在date 列当作index
                    #     data[data.index.name] = data.index
                 except:
-                    print 'tushare get data error'
+                    print('tushare get data error')
                     data = pd.DataFrame()
                 return data
             return default_method
@@ -70,7 +70,7 @@ class gm_api():
                 dat = dt
             else:
                 dat = dat.append(dt)
-            print '-----', code, dt.iloc[-1, 12][:19]
+            print('-----', code, dt.iloc[-1, 12][:19])
             last_end = tmp_end
             tmp_end = dt.iloc[-1, 12][:19]
             next_5min = datetime.strptime(tmp_end, '%Y-%m-%dT%H:%M:%S') + timedelta(minutes=int(ktype))
@@ -89,4 +89,4 @@ if __name__ == '__main__':
     gm = gm_api()
     dat = gm.get_k_data(code,'2015-01-01',ktype='5',isOHLC=False)
     dat.to_csv('../api/stock/csv/%s.csv'%code,encoding='gbk')
-    print dat.head()
+    print(dat.head())

@@ -7,10 +7,10 @@ Created on Fri Oct 14 08:46:27 2016
 import sys
 sys.path.append("..")
 
-from quant import constant as ct
-from gmsdk import md,to_dict
+import constant as ct
 import pandas as pd
 from datetime import datetime,timedelta
+from gmsdk import md,to_dict
 
 #ret = md.init('71468641@qq.com','jason123', 2,"SHSE.000027.bar.5")
 '''
@@ -53,7 +53,7 @@ class gm_api():
                    dat = dt
                else:
                    dat = dat.append(dt)
-               print '-----',code,dt.iloc[-1,12][:10]
+               print('-----',code,dt.iloc[-1,12][:10])
                last_end = tmp_end
                tmp_end = dt.iloc[-1,12][:10]
                tomorrow = datetime.strptime(tmp_end, '%Y-%m-%d') + timedelta(days=1)
@@ -71,4 +71,4 @@ if __name__ == '__main__':
     gm = gm_api()
     dat = gm.get_hist_data(code,'2015-01-01','2016-11-05',ktype='5')
     #dat.to_csv('d:/data_5minitue/%s.csv'%code,encoding='gbk')
-    print dat
+    print(dat)

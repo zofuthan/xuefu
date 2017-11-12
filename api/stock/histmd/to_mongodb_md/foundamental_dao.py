@@ -6,7 +6,7 @@
 import pandas as pd
 import datetime
 import json
-from quant import constant as ct
+import constant as ct
 import tushare as ts
 from pymongo import MongoClient
 

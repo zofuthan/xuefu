@@ -9,8 +9,8 @@ import pandas as pd
 import datetime
 import json
 import eventlet as et
-from quant import constant as ct
-from quant.utils.wapper_interface import tushare as ts
+import constant as ct
+from utils.wapper_interface import tushare as ts
 from pymongo import MongoClient
 from datetime import datetime
 from datetime import timedelta
@@ -42,7 +42,7 @@ class KdataDbCache():
 
         df = self._read_cache(collection_name,code,start,end)
         if df is None or df['date'].values[-1]< end:  #可能需要更新數據，更新數據的时候注意重新判定end的日期，因为有可能不是交易日
-            print 'may need update cache'
+            print('may need update cache')
             self._update_cache()
             data = self.ts.get_k_data(*args,**kwargs)  #新版的get_k_data方法仍需要指明是否为index
             if isinstance(data, pd.DataFrame) and not data.empty:
@@ -95,7 +95,7 @@ class KdataDbCache():
         for code in stock_list.code:
             self.pool.spawn_n(update_one_code, **{'code': code})
         self.pool.waitall()
-        print 'all is donetop'
+        print('all is donetop')
 
     def _read_cache(self, collectionName, code,start,end):
         """
@@ -131,4 +131,4 @@ class KdataDbCache():
 if __name__ == '__main__':
     w = KdataDbCache()
     data = w.get_k_data('000001',start='2016-01-05',end='2017-01-09',index=True)
-    print data
+    print(data)

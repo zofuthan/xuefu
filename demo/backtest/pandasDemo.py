@@ -2,7 +2,7 @@
 """
 Created on Tue Oct 06 11:13:33 2015
 从tushare 中在线读取以及使用pandas读取缓存的csv文件
-提供两种数据调取方式，一种为系统自带画图，另一种提供array方式各数据的接口，详见cn.lib.pyalg_utils.py
+提供两种数据调取方式，一种为系统自带画图，另一种提;llllllllllllllllllll;l;l;供array方式各数据的接口，详见cn.lib.pyalg_utils.py
 @author: lenovo
 """
 
@@ -11,7 +11,7 @@ from matplotlib.pyplot import plot
 from pyalgotrade import plotter
 from pyalgotrade.stratanalyzer import returns
 
-import pandasDemo_run as pdr
+from demo.backtest import pandasDemo_run as pdr
 from cnx import pyalg_utils, dataFramefeed
 
 
@@ -23,14 +23,14 @@ def turtle_test(loadtype='tushare', dataString='pyalg'):
     # 从dataFrame中加载，
     if loadtype == 'tushare':
         import tushare as ts
-        dat = ts.get_h_data('600848')
+        dat = ts.get_hist_data('002460')
         dat.index.name = 'date'
     else:
         dat = pd.read_csv("../../api/stock/csv/600848.csv", index_col=0, encoding='gbk')
-        print dat.head()
+        print(dat.head())
     feed = dataFramefeed.Feed()
-    feed.addBarsFromDataFrame("orcl", dat)
-    myStrategy = pdr.turtle(feed, "orcl", 20, 10)
+    feed.addBarsFromDataFrame("伊利股份", dat)
+    myStrategy = pdr.turtle(feed, "伊利股份", 20, 10)
     # Attach a returns analyzers to the strategy.
     returnsAnalyzer = returns.Returns()
     myStrategy.attachAnalyzer(returnsAnalyzer)
@@ -53,4 +53,4 @@ def turtle_test(loadtype='tushare', dataString='pyalg'):
 
 
 if __name__ == '__main__':
-    turtle_test(loadtype='tuxshare')
+    turtle_test(loadtype='tushare')

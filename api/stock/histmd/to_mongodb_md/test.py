@@ -1,3 +1,3 @@
 import os,sys
-print sys.path,os.path
-from quant.utils import BBcurve2
+print(sys.path,os.path)
+from utils import BBcurve2
